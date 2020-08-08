@@ -1,46 +1,66 @@
-import sys
 
-# 맵
-m = []
-
-# 지도 크기
 n = int(input())
 
-# 맵 초기화
-for h in range(n):
-    m.append(list(input()))
+m = [list(map(int, input().split())) for _ in range(n)]
+
+out_side = []
+
+cur_cnt = 2
+
+def disthingush(cur_cnt, i, j) :
+    if i not in range(0, n) or j not in range(0, n):
+        return
+    elif m[i][j] == 0:
+        out_side.append((cur_cnt, i, j))
+        return
+    elif m[i][j] != 1:
+        return
+    
+    m[i][j] = cur_cnt
+
+    disthingush(cur_cnt, i, j+1)
+    disthingush(cur_cnt, i, j-1)
+    disthingush(cur_cnt, i+1, j)
+    disthingush(cur_cnt, i-1, j)
+
+# 섬을 구분
+for i in range(n):
+    for j in range(n):
+        if m[i][j] == 1:
+            disthingush(cur_cnt, i, j)
+            cur_cnt += 1
 
 answer = []
-visted = []
-for h in range(n):
-    for w in range(n):
 
-        # 인덱스가 -값이거나 맵에서 1이 아닌 경우
-        if (h < 0 or w < 0) or m[h][w] != '1' or ((h, w) in visted):
-            continue
-        
-        temp_result = 0
-        q = [(h, w)]
-        while q:
-            c_h, c_w = q.pop(0)
-            if (c_h, c_w) in visted or (c_h < 0 or c_w < 0):
-                continue
+def findLoad(num, q):
+    dist = 0
+    visited = []
+    while q:
+        limit = len(q)
+        for _ in range(limit):
+            t_i, t_j = q.pop()
 
-            visted.append((c_h, c_w))
-            temp_result += 1
+            for next_i, next_j in [(t_i+1, j),(t_i-1, j),(t_i, t_j+1),(t_i, t_j-1)]:
 
-            # 주변 건물 확인
-            for t_h, t_w in [(c_h-1, c_w), (c_h, c_w-1), (c_h+1, c_w), (c_h, c_w+1)]:
-                try:
-                    if m[t_h][t_w] != '1':
-                        continue
-                    else:
-                        q.append((t_h, t_w))
-                except Exception:
+                # 리스트 인덱스 안에 있는지 확인
+                if next_i not in range(0, n) or next_j not in range(0, n):
                     continue
-        
-        answer.append(temp_result)
+                # 해당 지점이 방문한 곳이나 이미 시작한 섬인 경우
+                elif m[next_i][next_j] == num or (next_i, next_j) in visited:
+                    continue
+                # 다른 섬 도착
+                elif m[next_i][next_j] != 0:
+                    answer.append(dist)
+                    return
 
-print(len(answer))
-for jtem in sorted(answer):
-    print(jtem)
+                visited.append((next_i, next_j))
+                q = [(next_i, next_j)] + q
+
+        dist += 1
+
+for num, i, j in out_side:
+    findLoad(num, [(i, j)])
+
+print(min(answer)+1)
+
+
