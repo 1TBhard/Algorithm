@@ -2,10 +2,11 @@ function solution(n, computers) {
 	var answer = 0;
 	let visted = new Array(n).fill(false);
 
+	// dfs 로 해결
 	while (!visted.every((pass) => pass)) {
-		let q = Array(1).fill(visted.indexOf(false));
+		let q = [visted.indexOf(false)];
 		while (q.length > 0) {
-			let num = q.shift();
+			let num = q.pop();
 
 			visted[num] = true;
 
