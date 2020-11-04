@@ -73,8 +73,12 @@ function solution(board) {
 	return board[board.length - 1][board[0].length - 1];
 }
 
-solution([
-	[0, 0, 0],
-	[0, 0, 0],
-	[0, 0, 0],
-]);
+console.log(
+	solution([
+		[0, 0, 0, 0, 0, 0, 0],
+		[0, 1, 0, 1, 1, 1, 0],
+		[0, 0, 0, 0, 0, 1, 0],
+		[0, 1, 0, 1, 0, 0, 0],
+		[0, 0, 0, 1, 0, 1, 0],
+	])
+);

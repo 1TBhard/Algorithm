@@ -17,25 +17,25 @@ function solution(play_time, adv_time, logs) {
 	// 동시 시청 수
 	let most_con = 0;
 	let q = [];
-	let last = logs[logs.length - 1];
+	let first = logs[logs.length - 1];
 	let nu = 0;
 
 	for (var i = logs.length - 2; i >= 0; i--) {
-		if (last.start <= logs[i].end) {
+		if (first.end > logs[i].end) {
 			q.push(logs[i]);
-			nu += logs[i].end - last.start;
+			nu += logs[i].end - first.start;
 
 			// 가장 많이 보는 수 갱신
-			if (q.length > most_con && last.start <= answer) {
+			if (q.length > most_con && first.start <= answer) {
 				most_con = q.length;
-				answer = last.start;
+				answer = first.start;
 			}
 		} else {
-			while (logs[i].end < last.start && q.length > 0) {
-				nu -= q.pop().end - last.start;
+			while (logs[i].end < first.start && q.length > 0) {
+				nu -= q.pop().end - first.start;
 			}
 			if (q.length > 0) last = q[0];
-			else last = logs[i];
+			else first = logs[i];
 		}
 	}
 
