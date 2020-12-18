@@ -1,4 +1,3 @@
-// 시간 초과
 function solution(n, edge) {
 	var answer = [];
 
@@ -13,7 +12,6 @@ function solution(n, edge) {
 		else graph[end].push(start);
 	}
 
-	const keys = Object.keys(graph);
 
 	// 정점 번호
 	let q = [1];
