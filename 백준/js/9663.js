@@ -10,44 +10,44 @@
 /* ============================================================== */
 
 function solution(n) {
-  let map = Array.from(Array(n), () => Array(n).fill(0))
-  let answer = 0;
-  
-  // 퀸 발견시 true, 발견 못하면 false
-  let findQueen = (y, x) => {
-    for(var nextY= y-1, j=1 ; nextY >= 0 ; nextY--, j++) {
-      // 좌상으로 이동
-      if(x - j >= 0 && map[nextY][x-j] === 1) return true;
-      
-      // 위 이동
-      if(map[nextY][x] === 1) return true;
+	let map = Array.from(Array(n), () => Array(n).fill(0));
+	let answer = 0;
 
-      // 우상으로 이동
-      if(x + j >= 0 && map[nextY][x+j] === 1) return true;
-    }
+	// 퀸 발견시 true, 발견 못하면 false
+	let findQueen = (y, x) => {
+		for (var nextY = y - 1, j = 1; nextY >= 0; nextY--, j++) {
+			// 좌상으로 이동
+			if (x - j >= 0 && map[nextY][x - j] === 1) return true;
 
-    return false;
-  }
+			// 위 이동
+			if (map[nextY][x] === 1) return true;
 
-  const dfs = (y) => {
-    if(y >= n) {
-      answer++;
-      return;
-    }
+			// 우상으로 이동
+			if (x + j < n && map[nextY][x + j] === 1) return true;
+		}
 
-    for(var x=0 ; x < n ; x++) {
-      if(!findQueen(y, x)) {
-        map[y][x] = 1;
-        dfs(y + 1);
-        map[y][x] = 0;
-      }
-    }
-  }
+		return false;
+	};
 
-  dfs(0);
+	const dfs = (y) => {
+		if (y >= n) {
+			answer++;
+			return;
+		}
 
-  console.log(answer);
+		for (var x = 0; x < n; x++) {
+			if (!findQueen(y, x)) {
+				map[y][x] = 1;
+				dfs(y + 1);
+				map[y][x] = 0;
+			}
+		}
+	};
+
+	dfs(0);
+
+	console.log(answer);
 }
 
-const N = 15;
+const N = 10;
 solution(N);

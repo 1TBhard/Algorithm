@@ -15,7 +15,7 @@ function solution(LIMIT_H, LIMIT_W, map) {
     }
   */
 
-	const dfs = (startX, startY) => {
+	const bfs = (startX, startY) => {
 		let copyMap = [...map.map((_) => [..._])];
 
 		// 처음 시작점을 S로 잡음
@@ -75,7 +75,7 @@ function solution(LIMIT_H, LIMIT_W, map) {
 				case "W":
 					break;
 				case "L":
-					dfs(startY, startX);
+					bfs(startY, startX);
 					break;
 			}
 		}
