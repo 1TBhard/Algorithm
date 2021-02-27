@@ -1,32 +1,40 @@
 // 백준 1174. 줄어드는 숫자
 
 /* ========================== 백준 입력 ========================== */
-// let fs = require("fs");
-// let input = fs.readFileSync("/dev/stdin").toString().trim();
+let fs = require("fs");
+let input = fs.readFileSync("/dev/stdin").toString().trim();
 /* ============================================================== */
 
-var num = Array(1000).fill(0);
-var t = 10;
-var ans = []
+const list = [9,8,7,6,5,4,3,2,1,0];
 
-const LIST = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
+const arr = []
 
-function recursive(idx, str) {
-  
-  recursive(idx+1, str + LIST[idx])
-  recursive(idx+1, str)
+function recursive(str, idx, limit) {
+  if(str.length >= limit) {
+    arr.push(str);
+    return;
+  }
+
+  if(idx >= list.length) return;
+
+  recursive(str+list[idx], idx+1, limit);
+  recursive(str, idx+1, limit);
 }
 
 function solution(n) {
   if(n <= 10) {
     console.log(n-1);
-  } else if (n > 1023) {
+  } else if(n >= 1024) {
     console.log(-1);
   } else {
-    recursive(0, 0)
+    for(var limit=2 ; limit<=10 ; limit++) {
+      recursive("", 0, limit)
+    }
+
+    arr.sort();
+
+    console.log(arr[n])
   }
 }
 
-solution()
-
-console.log(ans)
+solution(input)
