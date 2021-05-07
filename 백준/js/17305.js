@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // 백준 17305. 사탕 배달
 
 // /* ========================== 백준 입력 ========================== */
@@ -43,3 +44,4 @@ var [inputN, limit] = input[0].split(" ").map(_ => parseInt(_));
 var arr = input.slice(1, input.length).map(itme => itme.split(" ").map(_ => parseInt(_)));
 
 solution(arr, limit)
+
