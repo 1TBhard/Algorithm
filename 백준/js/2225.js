@@ -18,8 +18,8 @@ L: 0 ~ N 에서 마지막 수
 */
 
 /* ========================== 백준 입력 ========================== */
-let fs = require("fs");
-let input = fs.readFileSync("/dev/stdin").toString().split(" ");
+// let fs = require("fs");
+// let input = fs.readFileSync("/dev/stdin").toString().split(" ");
 /* ============================================================== */
 
 function solution(n, k) {
@@ -33,14 +33,14 @@ function solution(n, k) {
 
   for(var i=1 ; i < k ; i++) {
     for(var j=1 ; j < n ; j++) {
-      arr[i][j] = Math.ceil((arr[i-1][j] + arr[i][j-1]) % 1000000000);
+      arr[i][j] = (arr[i-1][j] + arr[i][j-1]) % 1000000000;
     }
   }
 
   console.log(arr[k-1][n-1]);
 }
 
-let input = ["1", "3"];
+let input = ["5000", "5000"];
 
 let [n, k] = input.map(_ => parseInt(_));
 solution(n, k);
