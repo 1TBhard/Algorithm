@@ -1,40 +1,39 @@
 // 백준 1405. 미친 로봇
 
 /* ========================== 백준 입력 ========================== */
-let fs = require("fs");
-let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+// let fs = require("fs");
+// let input = fs.readFileSync("/dev/stdin").toString().trim();
 /* ============================================================== */
 
-function solution(N, w, s, n ,e) {
-  const MAP = Array(30).map(_ => new Array(30).fill(false));
-
-  const isDuplicate = (currentRound, y, x) => {
-    return MAP[y][x] === currentRound + 1; 
-  }
+function solution(N, e, w, s, n) {
+  const MAP = Array.from(Array(31), _ => new Array(29).fill(false))
 
   let answer = 0;
 
-  const recursive = (round, y, x) => {
-    MAP[y][x] = true
-
-    if(!isDuplicate(round, y+1, x)) {
-      recursive(round, y+1, x);
-      answer += s
-    }
-    if(!isDuplicate(round, y-1, x)) {
-      recursive(round, y-1, x);
-    } 
-    if(!isDuplicate(round, y, x+1)) {
-      recursive(round, y, x+1);
-    }
-    if(!isDuplicate(round, y, x-1)) {
-      recursive(round, y, x-1);
+  const recursive = (round, y, x, percent) => {
+    if(MAP[y][x] === true || round > N) {
+      return;
     }
 
-    MAP[y][x] = false
+    if(round === N) {
+      answer += percent;
+      return;
+    }
+
+
+    MAP[y][x] = true;
+    recursive(round + 1, y+1, x, percent * s / 100);
+    recursive(round + 1, y-1, x, percent * n / 100);
+    recursive(round + 1, y, x+1, percent * e / 100);
+    recursive(round + 1, y, x-1, percent * w / 100);
+    MAP[y][x] = false;
   }
 
-  recursive()
+  recursive(0, 15, 15, 1);
 
-
+  console.log(answer.toPrecision(9))
 }
+
+var [N, e, w, s, n] = input.split(" ").map(_ => parseInt(_));
+
+solution(N, e, w, s, n);
