@@ -1,4 +1,4 @@
-export class TreeNode {
+class TreeNode {
 	constructor(val, left, right) {
 		this.val = val === undefined ? 0 : val;
 		this.left = left ?? null;
@@ -6,7 +6,7 @@ export class TreeNode {
 	}
 }
 
-export function makeTest(arr) {
+function makeTest(arr) {
 	const head = new TreeNode(arr.shift());
 
 	let q = [head];
@@ -16,7 +16,7 @@ export function makeTest(arr) {
 		const targetNode = q.shift();
 
 		const leftVal = copyArr?.shift();
-		const left = leftVal ? new TreeNode(leftVal) : null;
+		const left = leftVal !== undefined ? new TreeNode(leftVal) : null;
 		targetNode.left = left;
 
 		q.push(left);
